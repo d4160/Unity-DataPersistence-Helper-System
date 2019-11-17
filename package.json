@@ -1,0 +1,17 @@
+{
+  "name": "d4160.data_persistence-helper-system",
+  "displayName": "Unity Data Persistence Helper System",
+  "version": "0.1.0",
+  "unity": "2017.1",
+  "description": "Provide helper classes to allow save/load data from many sources (player prefs, local file, remote, custom serialization, encryption).",
+  "keywords": [
+      "unity",
+      "data persistence",
+      "local persistence",
+      "remote persistence",
+      "playerprefs"
+  ],
+  "author": {
+    "name": "d4160(Maranatha2031)"
+  }
+}

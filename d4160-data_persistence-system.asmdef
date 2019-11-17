@@ -1,0 +1,17 @@
+{
+    "name": "d4160-data_persistence-system",
+    "references": [
+        "GUID:38257907825824cbd959d0a6e1ec6e8f",
+        "GUID:224bee8fc710d564c892c33f93bb16ea",
+        "GUID:92e481152c6a9fc49bbfde12f52a8381"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
