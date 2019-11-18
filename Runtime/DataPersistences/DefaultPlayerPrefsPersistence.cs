@@ -14,12 +14,12 @@ namespace d4160.Systems.DataPersistence
         /// <summary>
         /// The default object as a recipient for send load data
         /// </summary>
-        protected IPlayerPrefsActions m_loadDataContainer = null;
+        protected IStorageHelper m_storageHelper = null;
 
         /// <inheritdoc />
-        public DefaultPlayerPrefsPersistence(IPlayerPrefsActions emptyDataContainer, bool encrypted) : base(null)
+        public DefaultPlayerPrefsPersistence(IStorageHelper emptyDataContainer, bool encrypted) : base(null)
         {
-            m_loadDataContainer = emptyDataContainer;
+            m_storageHelper = emptyDataContainer;
             m_encrypted = encrypted;
         }
 
@@ -32,11 +32,11 @@ namespace d4160.Systems.DataPersistence
         /// <param name="onSaveFailed"></param>
         public override void Save(string identifier, ISerializableData content, Action onSaveCompleted = null, Action onSaveFailed = null)
         {
-            var playerPrefsPairs = content as IPlayerPrefsActions;
+            var storageHelper = content as IStorageHelper;
 
-            if (playerPrefsPairs != null)
+            if (storageHelper != null)
             {
-                playerPrefsPairs.Save(m_encrypted);
+                storageHelper.Save(m_encrypted);
 
                 onSaveCompleted?.Invoke();
             }
@@ -55,11 +55,11 @@ namespace d4160.Systems.DataPersistence
         /// <typeparam name="T"></typeparam>
         public override void Load<T>(string identifierFullPath, Action<ISerializableData> onLoadCompleted = null, Action onLoadFailed = null)
         {
-            if (m_loadDataContainer != null)
+            if (m_storageHelper != null)
             {
-                m_loadDataContainer.Load(m_encrypted);
+                m_storageHelper.Load(m_encrypted);
 
-                onLoadCompleted?.Invoke(m_loadDataContainer as ISerializableData);
+                onLoadCompleted?.Invoke(m_storageHelper as ISerializableData);
             }
             else
             {

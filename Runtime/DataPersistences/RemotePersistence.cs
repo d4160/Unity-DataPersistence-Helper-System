@@ -5,15 +5,14 @@
     using System;
     public abstract class RemoteDataPersistence : BaseDataPersistence
     {
-        /// <summary>
-        /// Use this value to prevent login many times if don't need that
-        /// </summary>
-        protected bool m_logged;
+        protected ILoginProvider m_loginProvider;
 
-        public RemoteDataPersistence(IDataSerializer serializer) : base(serializer)
+        public RemoteDataPersistence(IDataSerializer serializer, ILoginProvider loginProvider) : base(serializer)
         {
-        }
+            m_loginProvider = loginProvider;
 
-        public abstract void LogIn();
+            if (m_loginProvider != null)
+                m_loginProvider.Login();
+        }
     }
 }
