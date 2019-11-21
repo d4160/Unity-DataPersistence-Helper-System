@@ -8,6 +8,6 @@
 
         void FillFromSerializableData(ISerializableData data);
 
-        void Initialize(ISerializableData data);
+        void InitializeData(ISerializableData data);
     }
 }
