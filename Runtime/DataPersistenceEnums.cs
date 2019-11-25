@@ -1,8 +1,21 @@
 namespace d4160.Systems.DataPersistence
 {
+    public enum DataPersistenceTarget
+    {
+      Game,
+      Player,
+      AppSettings
+    }
+
     public enum DataPersistenceType
     {
       PlayerPrefs,
+      Local,
+      Remote
+    }
+
+    public enum AuthenticationType
+    {
       Local,
       Remote
     }

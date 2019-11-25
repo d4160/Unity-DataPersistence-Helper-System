@@ -6,6 +6,8 @@
 
     public abstract class DataLoader : MonoBehaviour
     {
+        [SerializeField] protected AuthenticatorController m_authenticator;
+        [SerializeField] protected DataPersistenceTarget m_persistenceTarget = DataPersistenceTarget.AppSettings;
         [SerializeField] protected DataPersistenceType m_persistenceType = DataPersistenceType.Local;
         [SerializeField] protected bool m_encrypted;
 
@@ -22,9 +24,6 @@
         [SerializeField] protected RemotePersistenceType m_remotePersistenceType = RemotePersistenceType.PlayFab;
 
         [ShowIf("IsDataPersistenceRemote")]
-        [SerializeField] protected string m_remoteId;
-
-        [ShowIf("IsDataPersistenceRemote")]
         [Tooltip("Otherwise split in many entries like playerprefs")]
         [SerializeField] protected bool m_storageInOneEntry;
 
@@ -38,6 +37,7 @@
         [SerializeField] protected DataSerializationAdapterType m_adapterType = DataSerializationAdapterType.Generic;
 
         protected IDataPersistence m_dataPersistence;
+        protected IDataSerializationAdapter m_dataSerializationAdapter;
 
         #region Editor Only
 #if UNITY_EDITOR
@@ -71,12 +71,27 @@
 
         protected bool SaveToPlayerPrefs => m_saveDataFolder == SaveDataPath.PlayerPrefs;
 
-        public string RemoteId { get =>  m_remoteId; set => m_remoteId = value; }
+        public abstract void CreateDataPersistence();
 
         public abstract void Initialize();
 
         public abstract void Save();
 
         public abstract void Load();
+
+        protected virtual IStorageHelper CreateStorageHelper(IDataSerializationActions serializationAdapter)
+        {
+            return null;
+        }
+
+        protected virtual IDataSerializationAdapter CreateSerializationAdapter()
+        {
+            return null;
+        }
+
+        protected virtual IDataSerializer CreateDataSerializer()
+        {
+            return null;
+        }
     }
 }

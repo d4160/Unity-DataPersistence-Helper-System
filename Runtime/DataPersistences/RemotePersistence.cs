@@ -1,18 +1,17 @@
 ﻿namespace d4160.Systems.DataPersistence
 {
-    using UnityEngine.GameFoundation.DataPersistence;
     using UnityEngine;
-    using System;
+    using UnityEngine.GameFoundation.DataPersistence;
+
     public abstract class RemoteDataPersistence : BaseDataPersistence
     {
-        protected ILoginProvider m_loginProvider;
+        protected string m_authenticationId;
 
-        public RemoteDataPersistence(IDataSerializer serializer, ILoginProvider loginProvider) : base(serializer)
+        public string AuthenticationId => m_authenticationId;
+
+        public RemoteDataPersistence(IDataSerializer serializer, string authenticationId) : base(serializer)
         {
-            m_loginProvider = loginProvider;
-
-            if (m_loginProvider != null)
-                m_loginProvider.Login();
+            m_authenticationId = authenticationId;
         }
     }
 }
