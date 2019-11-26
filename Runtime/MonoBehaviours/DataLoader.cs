@@ -79,7 +79,7 @@
 
         public abstract void Load();
 
-        protected virtual IStorageHelper CreateStorageHelper(IDataSerializationActions serializationAdapter)
+        protected virtual IStorageHelper CreateStorageHelper(IDataSerializationAdapter serializationAdapter)
         {
             return null;
         }
