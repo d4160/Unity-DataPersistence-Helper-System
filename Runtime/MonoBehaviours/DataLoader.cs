@@ -71,6 +71,8 @@
 
         protected bool SaveToPlayerPrefs => m_saveDataFolder == SaveDataPath.PlayerPrefs;
 
+        protected string DataPersistenceString => $"for {m_persistenceTarget}, as {m_persistenceType}, encrypted({m_encrypted})";
+
         public abstract void CreateDataPersistence();
 
         public abstract void Initialize();

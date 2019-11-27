@@ -25,7 +25,12 @@
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
 
-        public virtual void Login(Action onCompleted = null, Action onFailed = null)
+        public virtual void Login()
+        {
+            Login(null);
+        }
+
+        public virtual void Login(Action onCompleted, Action onFailed = null)
         {
             if(m_authenticated) return;
 
