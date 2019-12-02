@@ -77,6 +77,8 @@
 
         public abstract void Initialize();
 
+        public abstract void Uninitialize();
+
         public abstract void Save();
 
         public abstract void Load();

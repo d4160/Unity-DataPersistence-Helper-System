@@ -19,6 +19,8 @@
             System.Action onInitializeCompleted = null,
             System.Action onInitializeFailed = null);
 
+        void Uninitialize();
+
         void Load(
             IDataPersistence dataPersistence,
             System.Action onLoadCompleted = null,
