@@ -4,9 +4,9 @@
     using UnityEngine.GameFoundation.DataPersistence;
     using NaughtyAttributes;
 
-    public abstract class DataLoader : MonoBehaviour
+    public abstract class DataLoaderBase : MonoBehaviour
     {
-        [SerializeField] protected AuthenticatorController m_authenticator;
+        [SerializeField] protected AuthenticatorControllerBase m_authenticator;
         [SerializeField] protected DataPersistenceTarget m_persistenceTarget = DataPersistenceTarget.AppSettings;
         [SerializeField] protected DataPersistenceType m_persistenceType = DataPersistenceType.Local;
         [SerializeField] protected bool m_encrypted;

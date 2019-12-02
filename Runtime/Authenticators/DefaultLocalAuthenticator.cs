@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class LocalAuthenticator : IAuthenticator
+    public class DefaultLocalAuthenticator : IAuthenticator
     {
         protected string m_username;
         protected string m_id;
@@ -11,7 +11,7 @@
 
         public string Id => m_id;
 
-        public LocalAuthenticator(string username,
+        public DefaultLocalAuthenticator(string username,
             Action resultCallback,
             Action errorCallback)
         {

@@ -4,7 +4,7 @@
     using NaughtyAttributes;
     using UnityEngine;
 
-    public abstract class AuthenticatorController : MonoBehaviour
+    public abstract class AuthenticatorControllerBase : MonoBehaviour
     {
         [SerializeField] protected AuthenticationType m_authenticationType = AuthenticationType.Local;
         [ShowIf("IsAuthenticationRemote")]
