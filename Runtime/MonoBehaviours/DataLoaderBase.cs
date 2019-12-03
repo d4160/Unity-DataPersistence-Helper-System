@@ -25,7 +25,7 @@
 
         [ShowIf("IsDataPersistenceRemote")]
         [Tooltip("Otherwise split in many entries like playerprefs")]
-        [SerializeField] protected bool m_storageInOneEntry;
+        [SerializeField] protected bool m_remoteStorageInOneEntry;
 
         [ShowIf("AvailableToUseKey")]
         [SerializeField] protected string m_key;
@@ -41,13 +41,15 @@
 
         #region Editor Only
 #if UNITY_EDITOR
+        protected bool IsNotDataPersistenceTargetGameFoundation => m_persistenceTarget != DataPersistenceTarget.GameFoundation;
         protected bool IsDataPersistenceLocaOrRemote => IsDataPersistenceLocal || IsDataPersistenceRemote;
-        protected bool AvailableToUseSerializer => (IsDataPersistenceRemote && m_storageInOneEntry)
+        protected bool AvailableToUseSerializer => (IsDataPersistenceRemote && m_remoteStorageInOneEntry)
                                             || (IsDataPersistenceLocal);
 
-        protected bool AvailableToChoiceAdapter => IsNotSerializerJsonUtility &&
+        protected bool AvailableToChoiceAdapter => IsNotDataPersistenceTargetGameFoundation &&
+                                            IsNotSerializerJsonUtility &&
                                             (IsDataPersistenceLocal ||
-                                            (IsDataPersistenceRemote && m_storageInOneEntry));
+                                            (IsDataPersistenceRemote && m_remoteStorageInOneEntry));
 #endif
         #endregion
 
@@ -56,7 +58,7 @@
         protected bool IsNotSerializerJsonUtility => m_serializerType != DataSerializerType.JsonUtility;
         protected bool IsNotSavePathPlayerPrefs => m_saveDataFolder != SaveDataPath.PlayerPrefs;
         protected bool AvailableToUseKey => (!IsNotSavePathPlayerPrefs && IsDataPersistenceLocal)
-                                            || (IsDataPersistenceRemote && m_storageInOneEntry);
+                                            || (IsDataPersistenceRemote && m_remoteStorageInOneEntry);
 
         protected string Identifier
         {
@@ -72,6 +74,8 @@
         protected bool SaveToPlayerPrefs => m_saveDataFolder == SaveDataPath.PlayerPrefs;
 
         protected string DataPersistenceString => $"for {m_persistenceTarget}, as {m_persistenceType}, encrypted({m_encrypted})";
+
+        public AuthenticatorControllerBase Authenticator => m_authenticator;
 
         public abstract void CreateDataPersistence();
 

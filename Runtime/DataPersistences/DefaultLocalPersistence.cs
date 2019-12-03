@@ -30,7 +30,7 @@ namespace d4160.Systems.DataPersistence
 
         //We need to extract that code from the Save() because it will be used in the child but the child need to override the Save method sometimes
         //So to not rewrite the same code I have done a function with it
-        private void SaveFile(string identifierFullPath, ISerializableData content, Action onSaveFileCompleted, Action onSaveFileFailed)
+        protected void SaveFile(string identifierFullPath, ISerializableData content, Action onSaveFileCompleted, Action onSaveFileFailed)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace d4160.Systems.DataPersistence
             }
         }
 
-        private string ReadFile(string path)
+        protected string ReadFile(string path)
         {
             var str = "";
 
@@ -165,7 +165,7 @@ namespace d4160.Systems.DataPersistence
             return serializer.Serialize(o, m_encrypted);
         }
 
-        private T DeserializeString<T>(string value) where T : ISerializableData
+        protected T DeserializeString<T>(string value) where T : ISerializableData
         {
             return serializer.Deserialize<T>(value, m_encrypted);
         }

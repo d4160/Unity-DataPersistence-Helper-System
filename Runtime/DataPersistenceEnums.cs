@@ -4,7 +4,8 @@ namespace d4160.Systems.DataPersistence
     {
       Game,
       Player,
-      AppSettings
+      AppSettings,
+      GameFoundation
     }
 
     public enum DataPersistenceType
