@@ -77,6 +77,12 @@
 
         public AuthenticatorControllerBase Authenticator => m_authenticator;
 
+        public void CreateDataPersistenceAndInitialize()
+        {
+            CreateDataPersistence();
+            Initialize();
+        }
+
         public abstract void CreateDataPersistence();
 
         public abstract void Initialize();

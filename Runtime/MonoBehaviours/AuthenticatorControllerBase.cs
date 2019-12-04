@@ -3,6 +3,7 @@
     using System;
     using NaughtyAttributes;
     using UnityEngine;
+    using UnityEngine.Events;
 
     public abstract class AuthenticatorControllerBase : MonoBehaviour
     {
@@ -11,6 +12,10 @@
         [SerializeField] protected RemotePersistenceType m_remotePersistenceType = RemotePersistenceType.PlayFab;
 
         [SerializeField] protected string m_username;
+        [SerializeField] protected bool m_loginAtStart;
+        [SerializeField] protected UnityEvent m_onLoginCompleted;
+        [SerializeField] protected UnityEvent m_onLoginFailed;
+
 
         protected IAuthenticator m_authenticator;
         protected bool m_authenticated;
@@ -27,6 +32,12 @@
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
 
+        protected virtual void Start()
+        {
+            if (m_loginAtStart)
+                Login();
+        }
+
         public virtual void Login()
         {
             Login(null);
@@ -39,8 +50,13 @@
             m_authenticator = CreateAuthenticator(
                 () => {
                     onCompleted?.Invoke();
+                    m_onLoginCompleted?.Invoke();
+
                     m_authenticated = true;
-                }, onFailed);
+                }, () => {
+                    onFailed?.Invoke();
+                    m_onLoginFailed?.Invoke();
+                });
 
             if(m_authenticator != null)
                 m_authenticator.Login();
