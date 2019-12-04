@@ -21,6 +21,8 @@
 #endif
         #endregion
 
+        public AuthenticationType AuthenticationType => m_authenticationType;
+        public RemotePersistenceType RemotePersistenceType => m_remotePersistenceType;
         public string AuthenticationId => m_authenticator != null ? m_authenticator.Id : string.Empty;
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
