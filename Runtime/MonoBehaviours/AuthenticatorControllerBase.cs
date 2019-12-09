@@ -8,9 +8,17 @@
     public abstract class AuthenticatorControllerBase : MonoBehaviour
     {
         [SerializeField] protected AuthenticationType m_authenticationType = AuthenticationType.Local;
+
         [ShowIf("IsAuthenticationRemote")]
         [SerializeField] protected RemotePersistenceType m_remotePersistenceType = RemotePersistenceType.PlayFab;
 
+        [ShowIf("IsAuthenticationPlayFabRemote")]
+        [SerializeField] protected bool m_photonIntegration;
+        [ShowIf("IsAuthenticationRemote")]
+        [SerializeField] protected bool m_chatAuthentication;
+        [SerializeField] protected bool m_useDeviceUniqueIdentifier;
+
+        [ShowIf("ShowUserDisplayName")]
         [SerializeField] protected string m_username;
         [SerializeField] protected bool m_loginAtStart;
         [SerializeField] protected UnityEvent m_onLoginCompleted;
@@ -23,12 +31,14 @@
         #region Editor Only
 #if UNITY_EDITOR
         protected bool IsAuthenticationRemote => m_authenticationType == AuthenticationType.Remote;
+        protected bool IsAuthenticationPlayFabRemote => IsAuthenticationRemote && m_remotePersistenceType == RemotePersistenceType.PlayFab;
+        protected bool ShowUserDisplayName => !m_useDeviceUniqueIdentifier || m_chatAuthentication;
 #endif
         #endregion
 
         public AuthenticationType AuthenticationType => m_authenticationType;
         public RemotePersistenceType RemotePersistenceType => m_remotePersistenceType;
-        public string AuthenticationId => m_authenticator != null ? m_authenticator.Id : string.Empty;
+        public string AuthenticationId => m_authenticator != null ? m_authenticator.Id : "Player1";
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
 

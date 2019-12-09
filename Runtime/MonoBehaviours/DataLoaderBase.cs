@@ -2,10 +2,12 @@
 {
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
+    using UnityExtensions;
     using NaughtyAttributes;
 
     public abstract class DataLoaderBase : MonoBehaviour
     {
+        [InspectInline]
         [SerializeField] protected AuthenticatorControllerBase m_authenticator;
         [SerializeField] protected DataPersistenceTarget m_persistenceTarget = DataPersistenceTarget.AppSettings;
         [SerializeField] protected DataPersistenceType m_persistenceType = DataPersistenceType.Local;
