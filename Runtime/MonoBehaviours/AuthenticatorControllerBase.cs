@@ -14,7 +14,6 @@
 
         [ShowIf("IsAuthenticationPlayFabRemote")]
         [SerializeField] protected bool m_photonIntegration;
-        [ShowIf("IsAuthenticationRemote")]
         [SerializeField] protected bool m_chatAuthentication;
         [SerializeField] protected bool m_useDeviceUniqueIdentifier;
 
@@ -32,7 +31,7 @@
 #if UNITY_EDITOR
         protected bool IsAuthenticationRemote => m_authenticationType == AuthenticationType.Remote;
         protected bool IsAuthenticationPlayFabRemote => IsAuthenticationRemote && m_remotePersistenceType == RemotePersistenceType.PlayFab;
-        protected bool ShowUserDisplayName => !m_useDeviceUniqueIdentifier || m_chatAuthentication;
+        protected bool ShowUserDisplayName => (!m_useDeviceUniqueIdentifier || m_chatAuthentication);
 #endif
         #endregion
 
