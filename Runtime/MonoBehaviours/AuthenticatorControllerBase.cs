@@ -1,9 +1,11 @@
 ﻿namespace d4160.Systems.DataPersistence
 {
     using System;
+    using d4160.Systems.Networking;
     using NaughtyAttributes;
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityExtensions;
 
     public abstract class AuthenticatorControllerBase : MonoBehaviour
     {
@@ -15,6 +17,9 @@
         [ShowIf("IsAuthenticationPlayFabRemote")]
         [SerializeField] protected bool m_photonIntegration;
         [SerializeField] protected bool m_chatAuthentication;
+        [ShowIf("ShowChatController")]
+        [InspectInline]
+        [SerializeField] protected ChatControllerBase m_chatController;
         [SerializeField] protected bool m_useDeviceUniqueIdentifier;
 
         [ShowIf("ShowUserDisplayName")]
@@ -31,6 +36,7 @@
 #if UNITY_EDITOR
         protected bool IsAuthenticationRemote => m_authenticationType == AuthenticationType.Remote;
         protected bool IsAuthenticationPlayFabRemote => IsAuthenticationRemote && m_remotePersistenceType == RemotePersistenceType.PlayFab;
+        protected bool ShowChatController => IsAuthenticationRemote && m_chatAuthentication;
         protected bool ShowUserDisplayName => (!m_useDeviceUniqueIdentifier || m_chatAuthentication);
 #endif
         #endregion
@@ -40,6 +46,12 @@
         public string AuthenticationId => m_authenticator != null ? m_authenticator.Id : "Player1";
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
+
+        protected virtual void Awake()
+        {
+            if (!m_chatController)
+                m_chatController = GetComponent<ChatControllerBase>();
+        }
 
         protected virtual void Start()
         {

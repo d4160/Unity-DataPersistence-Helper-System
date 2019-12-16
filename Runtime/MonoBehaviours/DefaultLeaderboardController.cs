@@ -5,7 +5,7 @@
     using UnityExtensions;
     using UnityEngine;
 
-    public abstract class DefaultLeaderboardController : Singleton<DefaultLeaderboardController>
+    public abstract class DefaultLeaderboardController : MonoBehaviour
     {
         [InspectInline]
         [SerializeField] protected AuthenticatorControllerBase m_authenticator;
