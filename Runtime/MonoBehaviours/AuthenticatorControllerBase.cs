@@ -1,11 +1,9 @@
 ﻿namespace d4160.Systems.DataPersistence
 {
     using System;
-    using d4160.Systems.Networking;
     using NaughtyAttributes;
     using UnityEngine;
     using UnityEngine.Events;
-    using UnityExtensions;
 
     public abstract class AuthenticatorControllerBase : MonoBehaviour
     {
@@ -14,20 +12,17 @@
         [ShowIf("IsAuthenticationRemote")]
         [SerializeField] protected RemotePersistenceType m_remotePersistenceType = RemotePersistenceType.PlayFab;
 
-        [ShowIf("IsAuthenticationPlayFabRemote")]
-        [SerializeField] protected bool m_photonIntegration;
-        [SerializeField] protected bool m_chatAuthentication;
-        [ShowIf("ShowChatController")]
-        [InspectInline]
-        [SerializeField] protected ChatControllerBase m_chatController;
         [SerializeField] protected bool m_useDeviceUniqueIdentifier;
+        [ShowIf("IsAuthenticationRemote")]
+        [SerializeField] protected bool m_multiplayerAuthentication;
+        [ShowIf("IsAuthenticationRemote")]
+        [SerializeField] protected bool m_chatAuthentication;
 
         [ShowIf("ShowUserDisplayName")]
         [SerializeField] protected string m_username;
-        [SerializeField] protected bool m_loginAtStart;
+        [SerializeField] protected bool m_authenticateAtStart;
         [SerializeField] protected UnityEvent m_onLoginCompleted;
         [SerializeField] protected UnityEvent m_onLoginFailed;
-
 
         protected IAuthenticator m_authenticator;
         protected bool m_authenticated;
@@ -37,7 +32,7 @@
         protected bool IsAuthenticationRemote => m_authenticationType == AuthenticationType.Remote;
         protected bool IsAuthenticationPlayFabRemote => IsAuthenticationRemote && m_remotePersistenceType == RemotePersistenceType.PlayFab;
         protected bool ShowChatController => IsAuthenticationRemote && m_chatAuthentication;
-        protected bool ShowUserDisplayName => (!m_useDeviceUniqueIdentifier || m_chatAuthentication);
+        protected bool ShowUserDisplayName => (!m_useDeviceUniqueIdentifier || (IsAuthenticationRemote && m_chatAuthentication));
 #endif
         #endregion
 
@@ -47,15 +42,9 @@
         public bool Authenticated => m_authenticated;
         public string Username { get =>  m_username; set => m_username = value; }
 
-        protected virtual void Awake()
-        {
-            if (!m_chatController)
-                m_chatController = GetComponent<ChatControllerBase>();
-        }
-
         protected virtual void Start()
         {
-            if (m_loginAtStart)
+            if (m_authenticateAtStart)
                 Login();
         }
 
